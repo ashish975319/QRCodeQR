@@ -125,24 +125,56 @@ const ScannedDataDisplay = () => {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-600 to-blue-500 py-12">
       <div className="max-w-2xl w-full space-y-6">
         <div className="bg-blue-300 p-8 rounded-lg shadow-lg">
-          <h1 className="text-3xl font-extrabold text-bla mb-4 text-center">
+          <h1 className="text-3xl font-extrabold text-black mb-4 text-center">
             Personal Info
           </h1>
-          {dataLines.map((line, index) => (
-            <div
-              key={index}
-              className={`p-4 rounded-md shadow-md bg-slate-300 mb-4 ${
-                line.key === "Name" ? "bg-blue-100" : "bg-white"
-              }`}
-            >
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                {line.key}
-              </h2>
-              <p className="text-gray-950 text-lg">
-                {getValue(line.key, line.value)}
-              </p>
-            </div>
-          ))}
+          {dataLines.map((line, index) => {
+            const isAddressField = ["Address2", "Address3"].includes(line.key);
+            if (line.value && !isAddressField) {
+              return (
+                <div
+                  key={index}
+                  className={`p-4 rounded-md shadow-md bg-white mb-4 ${
+                    line.key === "Name" ? "bg-blue-100" : "bg-white"
+                  }`}
+                >
+                  <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                    {line.key}
+                  </h2>
+                  <p className="text-gray-950 text-lg">
+                    {getValue(line.key, line.value)}
+                  </p>
+                </div>
+              );
+            }
+            if (line.key === "Address2" && line.value) {
+              return (
+                <div
+                  key={index}
+                  className="p-4 rounded-md shadow-md bg-white mb-4"
+                >
+                  <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                    Address2
+                  </h2>
+                  <p className="text-gray-950 text-lg">{line.value}</p>
+                </div>
+              );
+            }
+            if (line.key === "Address3" && line.value) {
+              return (
+                <div
+                  key={index}
+                  className="p-4 rounded-md shadow-md bg-white mb-4"
+                >
+                  <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                    Address3
+                  </h2>
+                  <p className="text-gray-950 text-lg">{line.value}</p>
+                </div>
+              );
+            }
+            return null;
+          })}
         </div>
       </div>
     </div>

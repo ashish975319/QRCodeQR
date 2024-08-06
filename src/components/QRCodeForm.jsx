@@ -321,12 +321,8 @@ const QRCodeForm = () => {
     const newErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const mobileRegex = /^\d{10}$/;
-    //const landlineRegex = /^\+91\d{10}$|^\d{2,4}-\d{6,8}$/;
 
     if (!details.name.trim()) newErrors.name = "Name is required.";
-    // if (!landlineRegex.test(details.landline))
-    //   newErrors.landline =
-    //     "Invalid landline number. It should be 10 digits with or without country code, or in the format with area code.";
     if (!mobileRegex.test(details.mobile))
       newErrors.mobile = "Invalid mobile number. It should be 10 digits.";
     if (!emailRegex.test(details.email))
@@ -345,7 +341,18 @@ const QRCodeForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const formattedDetails = `Name: ${details.name}\nLandline: ${details.landline}\nMobile: ${details.mobile}\nEmail: ${details.email}\nWebsite: ${details.website}\nAddress1: ${details.address1}\nAddress2: ${details.address2}\nAddress3: ${details.address3}`;
+      let formattedDetails = `Name: ${details.name}\nMobile: ${details.mobile}\nEmail: ${details.email}\nWebsite: ${details.website}\nAddress1: ${details.address1}`;
+
+      if (details.landline.trim()) {
+        formattedDetails += `\nLandline: ${details.landline}`;
+      }
+      if (details.address2.trim()) {
+        formattedDetails += `\nAddress2: ${details.address2}`;
+      }
+      if (details.address3.trim()) {
+        formattedDetails += `\nAddress3: ${details.address3}`;
+      }
+
       const qrUrl = `${
         window.location.origin
       }/scanned-data?data=${encodeURIComponent(formattedDetails)}`;
