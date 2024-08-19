@@ -309,9 +309,7 @@ const QRCodeForm = () => {
     mobile: "",
     email: "",
     website: "",
-    address1: "",
-    address2: "",
-    address3: "",
+    address: "", // Updated field name
   });
   const [errors, setErrors] = useState({});
   const [qrValue, setQrValue] = useState("");
@@ -327,7 +325,7 @@ const QRCodeForm = () => {
       newErrors.mobile = "Invalid mobile number. It should be 10 digits.";
     if (!emailRegex.test(details.email))
       newErrors.email = "Invalid email address.";
-    if (!details.address1.trim()) newErrors.address1 = "Address1 is required.";
+    if (!details.address.trim()) newErrors.address = "Address is required."; // Updated field name
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -341,16 +339,10 @@ const QRCodeForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      let formattedDetails = `Name: ${details.name}\nMobile: ${details.mobile}\nEmail: ${details.email}\nWebsite: ${details.website}\nAddress1: ${details.address1}`;
+      let formattedDetails = `Name: ${details.name}\nMobile: ${details.mobile}\nEmail: ${details.email}\nWebsite: ${details.website}\nAddress: ${details.address}`; // Updated field name
 
       if (details.landline.trim()) {
         formattedDetails += `\nLandline: ${details.landline}`;
-      }
-      if (details.address2.trim()) {
-        formattedDetails += `\nAddress2: ${details.address2}`;
-      }
-      if (details.address3.trim()) {
-        formattedDetails += `\nAddress3: ${details.address3}`;
       }
 
       const qrUrl = `${
@@ -506,55 +498,25 @@ const QRCodeForm = () => {
             </div>
             <div>
               <label
-                htmlFor="address1"
+                htmlFor="address"
                 className="block text-gray-700 font-semibold"
               >
-                Address1
+                Address
               </label>
               <textarea
-                id="address1"
-                name="address1"
-                value={details.address1}
+                id="address"
+                name="address"
+                value={details.address}
                 onChange={handleChange}
                 className={`border p-3 w-full rounded-md focus:outline-none focus:ring-2 ${
-                  errors.address1
+                  errors.address
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-blue-500"
                 }`}
               ></textarea>
-              {errors.address1 && (
-                <p className="text-red-500 text-sm">{errors.address1}</p>
+              {errors.address && (
+                <p className="text-red-500 text-sm">{errors.address}</p>
               )}
-            </div>
-            <div>
-              <label
-                htmlFor="address2"
-                className="block text-gray-700 font-semibold"
-              >
-                Address2
-              </label>
-              <textarea
-                id="address2"
-                name="address2"
-                value={details.address2}
-                onChange={handleChange}
-                className="border p-3 w-full rounded-md focus:outline-none focus:ring-2 border-gray-300 focus:ring-blue-500"
-              ></textarea>
-            </div>
-            <div>
-              <label
-                htmlFor="address3"
-                className="block text-gray-700 font-semibold"
-              >
-                Address3
-              </label>
-              <textarea
-                id="address3"
-                name="address3"
-                value={details.address3}
-                onChange={handleChange}
-                className="border p-3 w-full rounded-md focus:outline-none focus:ring-2 border-gray-300 focus:ring-blue-500"
-              ></textarea>
             </div>
           </div>
 
