@@ -123,7 +123,7 @@ const ScannedDataDisplay = () => {
                     rel="noopener noreferrer"
                     className="inline-block bg-green-500 text-white py-2 px-4 rounded-md font-semibold hover:bg-green-600 transition duration-300"
                   >
-                    Location
+                    Location1
                   </a>
                 </div>
               );
